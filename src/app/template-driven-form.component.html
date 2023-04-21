@@ -1,0 +1,2301 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+span.a {
+  border: 1px solid black;
+  background-color: lightblue;
+  padding-top: 50px;
+  padding-right: 30px;
+  padding-bottom: 50px;
+  padding-left: 80px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  /*font-family: Apple Chancery, cursive;*/
+}
+
+/* Style the header */
+header {
+  background-color: #f8f9fa;
+  padding: 20px;
+  text-align: center;
+  font-size: 27px;
+  color: #6c757d;
+  border: 1px solid powderblue;
+  height: 170px;
+}
+
+.headerimg {
+	float: left;
+}
+
+.button {
+  background-color: #6c757d;
+  border: none;
+  color: black;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 3px 2px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.buttonGreen {
+  background-color: #7fcc86;
+  border: none;
+  color: black;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 3px 2px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.buttonRed {
+  background-color: #cc7f7f;
+  border: none;
+  color: black;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 3px 2px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.button:hover {opacity: 1}
+/* Container for flexboxes */
+section {
+  display: -webkit-flex;
+  display: flex;
+  border: 1px solid powderblue;
+}
+
+/* Style the navigation menu */
+nav {
+  float: left;
+  width: 15%;
+  background: #f8f9fa;
+  padding: 20px;
+  border: 1px solid rgb(141, 161, 163);
+}
+.nav-section-home {
+    padding: 10px 8px;
+    font-family: "Open Sans",apple-system,blinkmacsystemfont,"Segoe UI","Helvetica Neue",arial,sans-serif;
+    font-size: 13pt;
+    font-weight: 400;
+    border-bottom: 1px dashed #e0e0e0;
+    border-top-width: 0;
+    border-top-style: solid;
+    border-left: 4px solid #fff;
+    transition: background-color .4s ease;
+    transition: border-left-color .4s ease;
+}
+
+/* Style the list inside the menu */
+nav ul {
+  /*list-style-type: none;
+  padding: 0;*/
+  
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+
+}
+
+.list-group {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.list-group-item {
+    border: inherit;
+    background-color: inherit;
+}
+/* Style the content */
+article {
+  -webkit-flex: 3;
+  -ms-flex: 3;
+  flex: 3;
+  background-color: #eee;
+  padding: 20px;
+  border: 1px solid rgb(141, 161, 163);
+}
+
+.vertical-menu {
+  width: 200px;
+}
+
+.vertical-menu a {
+  background-color: #eee;
+  color: black;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+
+.vertical-menu a:hover {
+  background-color: #ccc;
+}
+
+.vertical-menu a.active {
+  background-color: powderblue;
+  color: black;
+}
+
+/* Style the footer */
+footer {
+  background-color: #777;
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+
+/* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
+@media (max-width: 600px) {
+  section {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+  }
+}
+</style>
+</head>
+<body>
+	
+	<header>
+		<img class="headerimg" src="../assets/images/drexel-logo.png" alt="logo" width="160px" height="120px"/>
+        <h1 style="display: inline;">Plumbing Information and Performance Evaluation (PIPE): A Decision Support Tool</h1>
+	  </header>
+
+<section>
+	<!--<nav role="navigation">-->
+		<div class="vertical-menu">
+		<a href="#" class="active">Home</a>
+		<a href="#">About</a>
+		<a href="#">Resources</a>
+	
+		<!--<ul id="nav-primary">
+		<li class="list-group-item"><a href="#">Home</a></li>
+		<li><a href="#">About</a></li>
+		<li><a href="#">Resources</a></li>
+	  </ul>-->
+	</div>
+<article>
+<form #userForm="ngForm" (ngSubmit)="onFormSubmit(userForm);showForm=false;" novalidate> 
+	<h2>Building Questions:</h2>
+	
+	<p> &nbsp; &nbsp;1.	Is your building a healthcare facility where patients stay overnight or does your building house or treat people who have chronic and acute medical problems or weakened immune systems?</p>
+	<input type="radio" value="buidingTypeYes" name="buidingType" [ngModel]="user.buidingType" required #buidingType="ngModel"> Yes <br>
+ 	<input type="radio" value="buidingTypeNo" name="buidingType" [ngModel]="user.buidingType" required #buidingType="ngModel"> No <br>
+ 	<div *ngIf="buidingType.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>
+
+	<p> &nbsp; &nbsp;2.	Does your building primarily house people older than 65 years (like a retirement home or assisted-living facility)?</p>
+	<input type="radio" value="retirementBuildingYes" name="retirementBuilding" [ngModel]="user.retirementBuilding" required #retirementBuilding="ngModel"> Yes <br>
+ 	<input type="radio" value="retirementBuildingNo" name="retirementBuilding" [ngModel]="user.retirementBuilding" required #retirementBuilding="ngModel"> No <br>
+ 	<div *ngIf="retirementBuilding.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>
+
+	<p> &nbsp; &nbsp;3.	Does your building have multiple housing units and a centralized hot water system (like a hotel or high-rise apartment complex)?</p>
+	<input type="radio" value="hotelBuildingYes" name="hotelBuilding" [ngModel]="user.hotelBuilding" required #hotelBuilding="ngModel"> Yes <br>
+ 	<input type="radio" value="hotelBuildingNo" name="hotelBuilding" [ngModel]="user.hotelBuilding" required #hotelBuilding="ngModel"> No <br>
+ 	<div *ngIf="hotelBuilding.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>
+
+	<p> &nbsp; &nbsp;4. Does your building have more than 10 stories (including basement levels)?</p>
+	<input type="radio" value="basementYes" name="basement" [ngModel]="user.basement" required #basement="ngModel"> Yes <br>
+ 	<input type="radio" value="basementNo" name="basement" [ngModel]="user.basement" required #basement="ngModel"> No <br>
+ 	<div *ngIf="basement.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>
+	<!--<p> &nbsp; &nbsp;4.	Does your building have more than 10 stories (including basement levels)?</p>
+	<input type="radio" value="buildingLevelYes" name="buildingLevel" [ngModel]="user.buildingLevel" required #buildingLevel="ngModel"> Yes <br>
+ 	<input type="radio" value="buildingLevelNo" name="buildingLevel" [ngModel]="user.buildingLevel" required #buildingLevel="ngModel"> No <br>
+ 	<div *ngIf="buildingLevel.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>-->
+
+	<h2>Device Questions:</h2>	 
+
+	<p> &nbsp; &nbsp;5.	Does your building have a cooling tower?</p>
+	<input type="radio" value="coolingTowerYes" name="coolingTower" [ngModel]="user.coolingTower" required #coolingTower="ngModel"> Yes <br>
+	 <input type="radio" value="coolingTowerNo" name="coolingTower" [ngModel]="user.coolingTower" required #coolingTower="ngModel"> No <br>
+	 <input type="radio" value="coolingTowerDont" name="coolingTower" [ngModel]="user.coolingTower" required #coolingTower="ngModel"> Don't know <br>
+
+ 	<div *ngIf="coolingTower.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>
+
+	<p> &nbsp; &nbsp;6.	Does your building have a hot tub (also known as a spa) that is not drained between each use?</p>
+	<input type="radio" value="hotTubYes" name="hotTub" [ngModel]="user.hotTub" required #hotTub="ngModel"> Yes <br>
+ 	<input type="radio" value="hotTubNo" name="hotTub" [ngModel]="user.hotTub" required #hotTub="ngModel"> No <br>
+ 	<div *ngIf="hotTub.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>
+
+	<p> &nbsp; &nbsp;7.	Does your building have a decorative fountain?</p>
+	<input type="radio" value="decoFounYes" name="decoFoun" [ngModel]="user.decoFoun" required #decoFoun="ngModel"> Yes <br>
+ 	<input type="radio" value="decoFounNo" name="decoFoun" [ngModel]="user.decoFoun" required #decoFoun="ngModel"> No <br>
+ 	<div *ngIf="decoFoun.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>	 
+
+	<p> &nbsp; &nbsp;8.	Does your building have a centrally-installed mister, atomizer, air washer, or humidifier?</p>
+	<input type="radio" value="humidifierYes" name="humidifier" [ngModel]="user.humidifier" required #humidifier="ngModel"> Yes <br>
+ 	<input type="radio" value="humidifierNo" name="humidifier" [ngModel]="user.humidifier" required #humidifier="ngModel"> No <br>
+ 	<div *ngIf="humidifier.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>
+
+	<p> &nbsp; &nbsp;9.	Does your building have dead ends?</p>
+	<input type="radio" value="deadEndYes" name="deadEnd" [ngModel]="user.deadEnd" required #deadEnd="ngModel"> Yes <br>
+ 	<input type="radio" value="deadEndNo" name="deadEnd" [ngModel]="user.deadEnd" required #deadEnd="ngModel"> No <br>
+ 	<div *ngIf="deadEnd.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>
+
+	<p> &nbsp; &nbsp;10. Does your building have thermostatic mixing valves?</p>
+	<input type="radio" value="tmvYes" name="tmv" [ngModel]="user.tmv" required #tmv="ngModel"> Yes <br>
+ 	<input type="radio" value="tmvNo" name="tmv" [ngModel]="user.tmv" required #tmv="ngModel"> No <br>
+ 	<div *ngIf="tmv.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>
+
+	<p> &nbsp; &nbsp;11. Does your building have low flow fixtures? (As per EPA, guidlines for low flow fixtures are: Shower heads- 2.0 gpm,
+		Faucets- 1.5 gpm, Toilet- 1.28 gpf)
+		</p>
+	<input type="radio" value="llfYes" name="llf" [ngModel]="user.llf" required #llf="ngModel"> Yes <br>
+ 	<input type="radio" value="llfNo" name="llf" [ngModel]="user.llf" required #llf="ngModel"> No <br>
+ 	<div *ngIf="llf.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>
+
+	<h2>Other Questions:</h2>	
+	
+	<p> &nbsp; &nbsp;12. Does your building have Electronic faucets?</p>
+	<input type="radio" value="efYes" name="ef" [ngModel]="user.ef" required #ef="ngModel"> Yes <br>
+ 	<input type="radio" value="efNo" name="ef" [ngModel]="user.ef" required #ef="ngModel"> No <br>
+ 	<div *ngIf="ef.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>
+	
+	<p> &nbsp; &nbsp;13. Does your building have Showers with flexible hoses?</p>
+	<input type="radio" value="sfhYes" name="sfh" [ngModel]="user.sfh" required #sfh="ngModel"> Yes <br>
+ 	<input type="radio" value="sfhNo" name="sfh" [ngModel]="user.sfh" required #sfh="ngModel"> No <br>
+ 	<div *ngIf="sfh.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>
+
+	<!--<h2>Questions about building type:</h2>
+	<div>-->
+
+    <!--<p> &nbsp; &nbsp;1.	Please tell us about the water system for the building you manage. Options to choose from:</p>
+
+ <input type="radio" value="male" name="gender" [ngModel]="user.gender" required #gender="ngModel"> Hospital <br>
+ <input type="radio" value="female" name="gender" [ngModel]="user.gender" required #gender="ngModel"> Residence primarily for those >=65 years old <br>
+ <input type="radio" value="third" name="gender" [ngModel]="user.gender" required #gender="ngModel"> Hotel or High-rise apartment - multiple housing units and a centralized hot water system<br>
+
+		 <div *ngIf="gender.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 </div>
+		 <br>
+		 <br>-->
+
+		<!-- <p> &nbsp; &nbsp;2. Is it over 10 stories (including basement)?</p>
+<input type="radio" value="male" name="uname" [ngModel]="user.userName" required #uname="ngModel"> Yes <br>
+ <input type="radio" value="female" name="uname" [ngModel]="user.userName" required #uname="ngModel"> No <br>
+ <div *ngIf="uname.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>
+
+ <h2>Questions about hot water system:</h2> 
+
+ <p> &nbsp; &nbsp;1. What is the type of hot water system does your building have?</p>
+ <input type="radio"  value="gas" name="gs" [ngModel]="user.headfield" required #gs="ngModel"> Gas <br>
+ <input type="radio" value="electric" name="gs" [ngModel]="user.headfield" required #gs="ngModel"> Electric <br>
+ <input type="radio" value="third1" name="gs" [ngModel]="user.headfield" required #gs="ngModel">Steam <br>
+  <input type="radio" value="female1" name="gs" [ngModel]="user.headfield" required #gs="ngModel"> Other <br>
+<br>
+ <div *ngIf="gs.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+<br>
+<p> &nbsp; &nbsp;2. Does it have a recirculation loop?</p>
+<input type="radio" value="yes" name="rc" [ngModel]="user.rcAccepted" required #rc="ngModel"> Yes <br>
+ <input type="radio" value="no" name="rc" [ngModel]="user.rcAccepted" required #rc="ngModel"> No <br>
+<div *ngIf="rc.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>-->
+
+  <!--<div *ngIf="ShowHideDiv()">	 
+<p> &nbsp; &nbsp;3.	Does it have a recirculation loop?</p>
+<input type="radio" value="yes" name="rc" [ngModel]="user.isTCAccepted" required #rc="ngModel"> Yes <br>
+ <input type="radio" value="no" name="rc" [ngModel]="user.isTCAccepted" required #rc="ngModel"> No <br>
+ </div>
+ <div *ngIf="rc.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>-->
+
+<h2>Water Temperature Questions: </h2>
+<p> &nbsp; &nbsp;14. How long does it take in seconds for the water to get warm after a tap is opened?</p>
+
+<label for="timeToTap">Please enter your answer here: </label> 
+ <input type="text" id="timeToTapInput"  name="timeToTapInput" (keyup)="onKey($event)"> 
+ <br><br>
+
+ <p> &nbsp; &nbsp;15. What hot water temperature setpoint (in ℃) do you use for the domestic hot water system (at sinks/taps and showers)?</p>
+ <input type="radio" value="setpointGreater" name="setpoint" [ngModel]="user.setpoint" required #setpoint="ngModel"> ≥ 50℃ <br>
+ <input type="radio" value="setpointBetween" name="setpoint" [ngModel]="user.setpoint" required #setpoint="ngModel"> ≥ 43℃ and ≤ 50℃ <br>
+ <input type="radio" value="setpointLesser" name="setpoint" [ngModel]="user.setpoint" required #setpoint="ngModel"> ≤ 43℃ <br>
+ <div *ngIf="setpoint.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+		  please select one of the field. 
+	 </div>
+  <br><br>
+
+<p> &nbsp; &nbsp;16. What is the measured disinfectant residual level (mg/L) in your plumbing system?</p>
+ <input type="radio" value="residualLevel1" name="residualLevel" [ngModel]="user.residualLevel" required #residualLevel="ngModel"> < 0.2 mg/L <br>
+ <input type="radio" value="residualLevel2" name="residualLevel" [ngModel]="user.residualLevel" required #residualLevel="ngModel"> ≥ 0.2 mg/L and < 1 mg/L<br>
+ <input type="radio" value="residualLevel3" name="residualLevel" [ngModel]="user.residualLevel" required #residualLevel="ngModel">  ≥ 1 mg/L and < 3 mg/L <br>
+ <input type="radio" value="residualLevel4" name="residualLevel" [ngModel]="user.residualLevel" required #residualLevel="ngModel"> > 3 mg/L <br>
+ <div *ngIf="residualLevel.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+		  please select one of the field. 
+	 </div>
+  <br><br>  
+
+<!--<h2>Other Questions:</h2> 
+<p> &nbsp; &nbsp;1.	Does your system have any spots that might cause water quality problems or that you need to keep an eye on? (Please select all applicable options)</p>
+<input type="checkbox" (change)="onDeadEnds($event)">
+ <label>Dead ends</label><br>
+ <input type="checkbox" (change)="onThermo($event)">
+ <label>Thermostatic Mixing Valves</label><br>
+ <input type="checkbox" (change)="onLlf($event)">
+ <label>Low flow fixtures</label><br>
+ <input type="checkbox" (change)="onCt($event)">
+ <label>Cooling towers</label><br>
+ <input type="checkbox" (change)="onCim($event)">
+ <label>Centrally installed mister, atomizer, air washer, or humidifier</label><br>
+ <input type="checkbox" (change)="onDeco($event)">
+ <label>Decorative fountain</label><br>
+ <input type="checkbox" (change)="onSpa($event)">
+ <label>Hot tubs (or spa)</label><br>
+ <input type="checkbox" (change)="onFaucet($event)">
+ <label>Electronic faucets </label><br>
+ <input type="checkbox" (change)="onHose($event)">
+ <label>Showers with flexible hoses </label><br>-->
+
+	<p><button href="#answers" class="buttonGreen" onclick="ScrolltoAnswers()" style="color:rgb(250, 160, 160)">Submit</button> &nbsp;
+		<button type="button" class="buttonRed" (click)="resetForm(userForm)" style="color:rgb(184, 241, 82)">Reset</button></p>
+		
+<div *ngIf="isValidFormSubmitted" [ngClass] = "'success'"> 
+
+	<div *ngIf="showForm" id= "answers">	 
+		<div #myDiv>
+	<br>
+		Based on your input, we have identified the following features for which your building needs a water management program:
+		<div *ngIf="onBuilding()">- hot and cold water distribution system</div>
+		<div *ngIf="onCt()">- cooling tower</div>
+		<div *ngIf="onHt()">- hot tub</div>
+		<div *ngIf="onDecoFoun()">- decorative fountain</div>
+		<div *ngIf="onHumid()">- centrally-installed mister, atomizer, air washer, or humidifier</div>
+		<div *ngIf="onThermoMix()">- thermostatic mixing valves</div>
+		<div *ngIf="onLowFixtures()">- low flow fixtures</div>
+		<div *ngIf="onDe()">- dead ends</div>
+		<div *ngIf="onEf()">- electronic faucets</div>
+		<div *ngIf="onSfh()">- showers with flexible hoses</div>
+		
+    <br>
+	
+	<!--</div>
+
+	<div *ngIf="showForm">
+	<p><strong>Results for Hot Water System: </strong></p>
+	<img src="../assets/images/electric.png" width="500px" height="180px">-->
+
+	
+	<h3>For more information on the water distrubtion system please refer to the below document:</h3>
+	<table>
+		<tr *ngIf="onBuilding()">
+			<td>hot and cold water distribution system</td>
+			<td></td>
+		</tr>
+	</table>
+	<h3>
+		For more information on the features required for your building, please refer to the below documents:
+	</h3>
+	<table>
+		
+		<tr  *ngIf="onCt()">
+			<td>cooling tower</td>
+			<td><img src="../assets/images/ct.png" width="500px" height="150px"></td>
+		</tr>
+		<tr *ngIf="onHt()">
+			<td>hot tub</td>
+			<td><img src="../assets/images/spa.png" width="500px" height="150px"></td>
+		</tr>
+		<tr  *ngIf="onDecoFoun()">
+			<td>decorative fountain</td>
+			<td><img src="../assets/images/deco.png" width="500px" height="150px"></td>
+		</tr>
+		<tr  *ngIf="onHumid()">
+			<td>centrally-installed mister, atomizer, air washer, or humidifier</td>
+			<td><img src="../assets/images/cim.png" width="500px" height="150px"></td>
+		</tr>
+		<tr  *ngIf="onThermoMix()">
+			<td>thermostatic mixing valves</td>
+			<td><img src="../assets/images/thermo2.png" width="500px" height="150px"></td>
+		</tr>
+		<tr  *ngIf="onLowFixtures()">
+			<td>low flow fixtures</td>
+			<td><img src="../assets/images/llf.png" width="500px" height="150px"></td>
+		</tr>
+		<tr  *ngIf="onDe()">
+			<td>dead ends</td>
+			<td><img src="../assets/images/deadEnds.png" width="500px" height="150px"></td>
+		</tr>
+		<tr  *ngIf="onEf()">
+			<td>electronic faucets</td>
+			<td><img src="../assets/images/faucet.png" width="500px" height="150px"></td>
+		</tr>
+		<tr  *ngIf="onSfh()">
+			<td>showers with flexible hoses</td>
+			<td><img src="../assets/images/hose.png" width="500px" height="150px"></td>
+		</tr>
+	</table>
+
+	<div>
+		<p><strong>Results for Water Temperature: </strong></p>
+		<p>{{results}}</p>
+			<img src="../assets/images/timeToTap.PNG" width="800px" height="120px">
+		
+		<p>{{setpointResults}}</p>
+			<img src="../assets/images/setpoint.PNG" width="800px" height="120px">	
+
+		<p>{{residualResults}}</p>
+			<img src="../assets/images/residual.PNG" width="800px" height="120px">	
+	</div>	
+	<!--<div>
+		<p><strong>Results for Water Quality Problems:</strong></p>
+		<div *ngIf="deadEnds"><p>For Dead Ends</p><img src="../assets/images/deadEnds.png" width="500px" height="150px"></div>	
+	    
+		<div *ngIf="thermo"><p>For Thermostatic Mixing Valves</p><img src="../assets/images/thermo1.png" width="500px" height="150px">
+		<img src="../assets/images/thermo2.png" width="500px" height="150px"></div>
+
+		<div *ngIf="llf"><p>For Low flow fixtures</p><img src="../assets/images/llf.png" width="500px" height="150px"></div>
+
+		<div *ngIf="ct" name="targetname"><p>For Cooling towers</p><img src="../assets/images/ct.png" width="500px" height="150px"></div>
+
+		<div *ngIf="cim"><p>For Centrally installed mister</p><img src="../assets/images/cim.png" width="500px" height="150px"></div>
+
+		<div *ngIf="deco"><p>For Decorative fountain</p><img src="../assets/images/deco.png" width="500px" height="150px"></div>
+
+		<div *ngIf="spa"><p>For Hot tubs (or spa)</p><img src="../assets/images/spa.png" width="500px" height="150px"></div>
+
+		<div *ngIf="faucet"><p>For Electronic faucets</p><img src="../assets/images/faucet.png" width="500px" height="150px"></div>
+
+		<div *ngIf="hose"><p>For Showers with flexible hoses</p><img src="../assets/images/hose.png" width="500px" height="150px"></div>-->
+	 
+	<!--<textarea *ngIf="deadEnds" id="w3mission1" rows="10" cols="140">
+		In a storage water heater, cold water enters at the base of the vessel with hot water being drawn off from the top for distribution. 
+		A control thermostat to regulate the supply of heat to the storage water heater should be fitter near the top of the vessel and 
+		adjusted so that the outlet water temperature is constant. The water temperature at the base of the storage water heater 
+		(i.e., under the heating coil) will usually be much cooler than the water temperature at the top and potentially create a zone of 
+		water temperature conducive to the growth of legionellae. One method of preventing growth is to ensure that the whole water content 
+		of the storage water heater, including that at the base, is heated to a temperature of at least 60 C for atleast one hour each day.
+		A shunt pump to move hot water from the top of the storage water heater to the base is one way of acheiving this. Ideally the storage 
+		water heater will have specific connections for the shunt-pump return, as low down on the storage water heater as.
+		</textarea>
+	
+		<textarea *ngIf="thermo" id="w3mission2" rows="10" cols="140">
+			In a storage water heater, cold water enters at the base of the vessel with hot water being drawn off from the top for distribution. 
+			A control thermostat to regulate the supply of heat to the storage water heater should be fitter near the top of the vessel and 
+			adjusted so that the outlet water temperature is constant. 
+			</textarea>
+		
+		<textarea *ngIf="llf" id="w3mission3" rows="10" cols="140">
+				In a storage water heater, cold water enters at the base of the vessel with hot water being drawn off from the top for distribution. 
+				A control thermostat to regulate the supply of heat to the storage water heater should be fitter near the top of the vessel and 
+				adjusted so that the outlet water temperature is constant. 
+		</textarea>	
+	
+		<textarea *ngIf="ct" id="w3mission4" rows="10" cols="140">
+			In a storage water heater, cold water enters at the base of the vessel with hot water being drawn off from the top for distribution. 
+			A control thermostat to regulate the supply of heat to the storage water heater should be fitter near the top of the vessel and 
+			adjusted so that the outlet water temperature is constant. 
+		</textarea>
+
+		<textarea *ngIf="cim" id="w3mission4" rows="10" cols="140">
+			In a storage water heater, cold water enters at the base of the vessel with hot water being drawn off from the top for distribution. 
+			A control thermostat to regulate the supply of heat to the storage water heater should be fitter near the top of the vessel and 
+			adjusted so that the outlet water temperature is constant. 
+		</textarea>
+	
+		<textarea *ngIf="deco" id="w3mission5" rows="10" cols="140">
+			In a storage water heater, cold water enters at the base of the vessel with hot water being drawn off from the top for distribution. 
+			A control thermostat to regulate the supply of heat to the storage water heater should be fitter near the top of the vessel and 
+			adjusted so that the outlet water temperature is constant. 
+		</textarea>
+
+		<textarea *ngIf="spa" id="w3mission6" rows="10" cols="140">
+			In a storage water heater, cold water enters at the base of the vessel with hot water being drawn off from the top for distribution. 
+			A control thermostat to regulate the supply of heat to the storage water heater should be fitter near the top of the vessel and 
+			adjusted so that the outlet water temperature is constant. 
+		</textarea>
+
+		<textarea *ngIf="faucet" id="w3mission4" rows="10" cols="140">
+			In a storage water heater, cold water enters at the base of the vessel with hot water being drawn off from the top for distribution. 
+			A control thermostat to regulate the supply of heat to the storage water heater should be fitter near the top of the vessel and 
+			adjusted so that the outlet water temperature is constant. 
+		</textarea>
+
+		<textarea *ngIf="hose" id="w3mission4" rows="10" cols="140">
+			In a storage water heater, cold water enters at the base of the vessel with hot water being drawn off from the top for distribution. 
+			A control thermostat to regulate the supply of heat to the storage water heater should be fitter near the top of the vessel and 
+			adjusted so that the outlet water temperature is constant. 
+		</textarea>-->
+
+	
+	</div>
+	<button class="btn btn-danger btn-block" (click)="downloadPDF()">Download PDF</button></div>
+</div>
+
+</form>
+</article>
+</section>
+
+<footer>
+	<div class="container-fluid footer-wrapper">
+		<div class="container">
+
+			<div class="row">
+<address class="col-md-3" itemscope="itemscope" itemtype="https://schema.org/Organization">
+<strong>HAVE QUESTIONS?</strong>
+
+<!--<div class="row mt-2">
+<div class="col-1"><span class="fi cdc-icon-desktop x24" aria-hidden="true"></span></div>
+<div class="col">
+	<span class="pl-1"><a href="https://www.cdc.gov/cdc-info/index.html">Visit CDC-INFO</a></span>
+</div>
+</div>
+<div class="row mt-2">
+<div class="col-1"><span class="fi cdc-icon-phone x24"></span></div>
+<div class="col">
+	<span class="pl-1" itemprop="telephone">Call 800-232-4636</span>
+</div>
+</div>
+<div class="row mt-2">
+<div class="col-1"><span class="fi cdc-icon-email x24"></span></div>
+<div class="col">
+	<span class="pl-1" itemprop="url"><a href="https://wwwn.cdc.gov/dcs/contactus/form">Email CDC-INFO</a></span>
+</div>
+</div>
+<div class="row mt-2">
+<div class="col-1"><span class="fi cdc-icon-clock_01 x24"></span></div>
+<div class="col">
+	<span class="pl-1"><a href="https://www.cdc.gov/cdc-info/index.html">Open 24/7</a></span>
+</div>
+</div>-->
+</address>
+<div class="col-md-3 mt-3 mt-md-0">
+<strong>DST INFORMATION</strong>
+<!--<ul>
+<li><a href="https://www.cdc.gov/about/default.htm">About CDC</a></li>
+<li><a href="https://jobs.cdc.gov">Jobs</a></li>
+<li><a href="https://www.cdc.gov/funding">Funding</a></li>
+<li><a href="https://www.cdc.gov/Other/policies.html">Policies</a></li>
+<li><a href="https://www.cdc.gov/other/plugins/index.html">File Viewers &amp; Players</a></li>
+</ul>
+</div>
+<div class="col-md-3">
+<ul>
+<li><a href="https://www.cdc.gov/other/privacy.html">Privacy</a></li>
+<li><a href="https://www.cdc.gov/od/foia">FOIA</a></li>
+<li><a href="https://www.cdc.gov/eeo/nofearact/index.htm">No Fear Act</a></li>
+<li><a href="https://oig.hhs.gov">OIG</a></li>
+<li><a href="https://www.cdc.gov/other/nondiscrimination.html">Nondiscrimination</a></li>
+<li><a href="https://www.cdc.gov/contact/accessibility.html">Accessibility</a></li>
+</ul>-->
+</div>
+<div class="col-md-3 mt-2 mt-md-0 connect-icons">
+<strong>CONNECT WITH US</strong><br>
+<!--<ul class="list-inline mt-3">
+<li><a href="https://www.facebook.com/CDC" target="_blank"><span class="sr-only">Facebook</span><span class="fi cdc-icon-fb-white x24" aria-hidden="true"></span></a></li>
+<li><a href="https://twitter.com/CDCgov" target="_blank"><span class="sr-only">Twitter</span><span class="fi cdc-icon-twitter-white x24" aria-hidden="true"></span></a></li>
+<li><a href="https://www.instagram.com/CDCgov/" target="_blank"><span class="sr-only">Instagram</span><span class="fi cdc-icon-insta x24" aria-hidden="true"></span></a></li>
+<li><a href="https://www.linkedin.com/company/centers-for-disease-control-and-prevention" target="_blank"><span class="sr-only">LinkedIn</span><span class="fi cdc-icon-linkedin-white x24" aria-hidden="true"></span></a></li>
+<li><a href="https://www.snapchat.com/add/cdcgov" target="_blank"><span class="sr-only">Snapchat</span><span class="fi cdc-icon-snapchat x24" aria-hidden="true"></span></a></li>
+</ul><br class="d-none d-md-block">
+<ul class="list-inline mt-2">
+<li><a href="https://www.youtube.com/user/CDCstreamingHealth" target="_blank"><span class="sr-only">Youtube</span><span class="fi cdc-icon-youtube-white x24" aria-hidden="true"></span></a></li>
+<li><a href="https://tools.cdc.gov/medialibrary/index.aspx#/sharecontent/https://www.cdc.gov/legionella/wmp/toolkit/wmp-risk.html" class="footer-syndlink"><span class="sr-only">Syndicate</span><span class="fi cdc-icon-syndication-white x24" aria-hidden="true"></span></a></li>
+<li><a href="https://www.cdc.gov/cdctv"><span class="sr-only">CDC TV</span><span class="fi cdc-icon-cdc-tv-white x24" aria-hidden="true"></span></a></li>
+<li><a href="https://tools.cdc.gov/podcasts/rss.asp"><span class="sr-only">RSS</span><span class="fi cdc-icon-rss-white x24" aria-hidden="true"></span></a></li>
+<li><a href="https://wwwn.cdc.gov/dcs/RequestForm.aspx"><span class="sr-only">Email</span><span class="fi cdc-icon-email x24" aria-hidden="true"></span></a></li>
+</ul>-->
+</div>
+</div>
+</div>
+</div>
+	
+  </footer>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+.container {
+  border: 2px solid #ccc;
+  background-color: #eee;
+  border-radius: 5px;
+  padding: 16px;
+  margin: 16px 0
+}
+
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.container img {
+  float: left;
+  margin-right: 20px;
+}
+
+.container span {
+  font-size: 20px;
+  margin-right: 15px;
+}
+
+@media (max-width: 500px) {
+  .container {
+      text-align: center;
+  }
+  .container img {
+      margin: auto;
+      float: none;
+      display: block;
+  }
+}
+
+span.a {
+  border: 1px solid black;
+  background-color: lightblue;
+  padding-top: 50px;
+  padding-right: 30px;
+  padding-bottom: 50px;
+  padding-left: 80px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  color: black;
+  font-weight: 535;
+  font-size: 15px;
+  /*font-family: Apple Chancery, cursive;*/
+}
+
+div {
+  color: black;	
+}
+
+/* Style the header */
+header {
+  background-color:#f9fbfc;
+  padding: 20px;
+  text-align: center;
+  font-family:Georgia, serif;
+  font-size: 20px;
+  color: black;
+  border: 1px black;
+  height: 150px;
+}
+
+.headerimg {
+	float: left;
+    vertical-align: top;
+}
+.h2 {
+	font-size: 14px;
+}
+
+.h4 {
+	font-size: 14px;
+	font-weight: 535;
+}
+
+.button {
+  background-color: #dadde0;
+  border: none;
+  color: black;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 3px 2px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover {opacity: 1}
+/* Container for flexboxes */
+section {
+  display: -webkit-flex;
+  display: flex;
+  border: 1px solid black;
+}
+
+/* Style the navigation menu */
+nav {
+  float: left;
+  width: 15%;
+  background: #f8f9fa;
+  padding: 20px;
+  border: 1px solid rgb(141, 161, 163);
+}
+.nav-section-home {
+    padding: 10px 8px;
+    font-family: Georgia, serif;
+    font-size: 13pt;
+    font-weight: 400;
+    border-bottom: 1px dashed #e0e0e0;
+    border-top-width: 0;
+    border-top-style: solid;
+    border-left: 4px solid #fff;
+    transition: background-color .4s ease;
+    transition: border-left-color .4s ease;
+}
+
+/* Style the list inside the menu */
+nav ul {
+  /*list-style-type: none;
+  padding: 0;*/
+  
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+
+}
+
+.list-group {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.list-group-item {
+    border: inherit;
+    background-color: inherit;
+}
+/* Style the content */
+.home {
+  -webkit-flex: 3;
+  -ms-flex: 3;
+  flex: 3;
+  background-color: white;
+  padding: 25px;
+  border: 1px solid rgb(141, 161, 163);
+}
+
+#about {
+  -webkit-flex: 3;
+  -ms-flex: 3;
+  flex: 3;
+  background-color: white;
+  padding: 30px;
+  border: 1px solid rgb(141, 161, 163);
+}
+
+#resources {
+  -webkit-flex: 3;
+  -ms-flex: 3;
+  flex: 3;
+  background-color: white;
+  padding: 30px;
+  border: 1px solid rgb(141, 161, 163);
+}
+
+#trainings {
+  -webkit-flex: 3;
+  -ms-flex: 3;
+  flex: 3;
+  background-color: white;
+  padding: 30px;
+  height: 550px;
+  border: 1px solid rgb(141, 161, 163);
+}
+
+.vertical-menu {
+  width: 200px;
+}
+
+.vertical-menu a {
+  background-color: lightgray;
+  color: black;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+
+.vertical-menu a:hover {
+  background-color: #ccc;
+}
+
+.vertical-menu a.active {
+  background-color: grey;
+  color: black;
+}
+
+#results {
+  font-family: Georgia, serif;
+  border-collapse: collapse;
+  width: 100%;
+  color: black;
+}
+
+#results td, #results th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#results tr:nth-child{background-color: #f2f2f2;}
+
+#results tr:hover {background-color: #ddd;}
+
+#results th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #989a9c;
+  color: white;
+  font-weight: bold
+}
+
+/* Style the footer */
+footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(153, 155, 155);
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+
+/* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
+@media (max-width: 600px) {
+  section {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+  }
+}
+</style>
+</head>
+
+<body>
+	
+	<header>
+		<img class="headerimg" src="http://www.pages.drexel.edu/~lm3388/DSTProject/assets/images/drexel-logo.png" alt="logo" width="160px" height="120px"/>
+        <h1 style="display: inline;">Plumbing Information and Performance Evaluation (PIPE): A Decision Support Tool</h1>
+	  </header>
+
+<section>
+	
+	<!--<nav role="navigation">-->
+		<div class="vertical-menu">
+		<a type = "button" (click) = "showHome()" class="active">Home</a>
+		<a type = "button" (click) = "showAbout()" >About</a>
+		<a type = "button" (click) = "showResources()" >Resources</a>
+		<a type = "button" (click) = "showTrainings()" >Trainings</a>
+
+	<!--	<button class="tablinks" (click)="openTab($event, 'Home')" id="defaultOpen">Home</button>
+		<button class="tablinks" (click)="openTab($event, 'About')">About</button>>
+		<button class="tablinks" (click)="openTab($event, 'Resources')">Resources</button>
+		<button class="tablinks" (click)="openTab($event, 'Trainings')" >Trainings</button>-->
+	
+		<!--<ul id="nav-primary">
+		<li class="list-group-item"><a href="#">Home</a></li>
+		<li><a href="#">About</a></li>
+		<li><a href="#">Resources</a></li>
+	  </ul>-->
+	</div>
+	<div id = "about" *ngIf='isShowAbout'>
+		<!--<div id = "About" class="tabcontent">-->
+		<h3>Welcome to Building Water Quality Research Group at Drexel University! </h3><br>
+		<h4>About Us: </h4>
+		<p>We are a research team of professors, scientists, graduate students, and field practitioners at Drexel University, Environmental Science and Policy Research Institute (ESPRI), and University of Colorado, Boulder. Under the U.S. Environmental Protection Agency 
+			<a href="https://cfpub.epa.gov/ncer_abstracts/index.cfm/fuseaction/display.abstractDetail/abstract/10735" target="_blank">Assistance Agreement # R836880</a>
+			 to Drexel University, we complied comprehensive guidance for water quality management in large buildings which are based on  
+<br><ul>
+			<li> the review of existing guidance documents from agencies across the US and worldwide and available scientific literature  
+			</li>		
+			<li>interviews with subject matter experts from worldwide.  
+			</li>	
+			<li>interviews with building water quality management practitioners </li></ul></p><br>
+			<h4>PIPE Decision Support Tool </h4>
+			<h4>Purpose of the DST: </h4>
+			<p>Building owners, facility managers, and other stakeholders responsible for maintaining water quality in large buildings are frequently concerned about the contamination of drinking water systems in buildings. These concerns are more pronounced in buildings such as the following: 
+<br><ul>
+			<li>Large buildings or buildings where elderly and immunocompromised populations reside, such as hospitals and long-term care facilities 
+			</li>	
+			<li>Buildings with innovative technologies, such as water or energy-conserving or recycling technologies, advanced valves, and treatment systems, that may have unintended impacts on water quality through changes to water residence times and constituent concentrations 
+			</li>	
+			<li>Buildings subject to intended or unintended prolonged closures such as schools and hotels closed during the COVID-19 pandemic  
+			</li></ul>
+				The purpose of the PIPE decision support tool is to provide a free resource for building managers, such as those in the above mentioned, highly susceptible buildings, for assessing and protecting water quality in their buildings. </p>
+	<br>
+	<h4>How it Works: </h4>
+	<p>We provide a FREE web-based decision support tool to assist users in managing water quality in their building. This tool will help you assess: 
+<br>
+			- If you need a formal water quality management plan 
+		<br>
+			- What features in your plumbing need management, i.e., temperature settings, thermostatic mixing valve, low flow fixtures, etc. 
+		<br>
+		&nbsp;&nbsp;&nbsp;	- You provide basic information on the water distribution system, operational and design parameters in your plumbing 
+		<br>
+		&nbsp;&nbsp;&nbsp;	- The tool provides downloadable guidance information from multiple sources tailored to your building need </p>
+	    <p><b>Note: </b>The PIPE DST includes a broad database to address complicated water quality issues in building water systems to reduce the risk of contamination and waterborne disease outbreaks but no one resource can be comprehensive. Premise plumbing water systems vary significantly. There may be no substitute for measuring water quality in your building. In the absence of measurement, no system can provide any assurance that water quality objectives are being met. The PIPE DST is for informational purposes only for the decision-makers, and it does not substitute for engineering guidance for water management. The output report provided by this DST does not judge which source of guidance is best but does provide citations to full documents for the user to review in-depth as needed to make well-informed decisions. </p>		
+	<br><br>
+	</div>
+
+
+
+	<div id = "resources" *ngIf='isShowResources'>
+		<!--<div id = "Resources" class="tabcontent">-->
+		<h4>Refer to the below links for more information:</h4><br>
+		<ul>
+
+		<li> ASHRAE. 
+			<a href="https://www.ashrae.org/technical-resources/bookstore/ansi-ashrae-standard-188-2018-legionellosis-risk-management-for-building-water-systems" target="_blank">ANSI/ASHRAE Standard 188-2018 Legionellosis: Risk Management for Building Water Systems</a>
+			; ASHRAE: Atlanta, GA, USA, 2018. 
+		</li>
+		<br>
+		<li>CDC. 
+			<a href="https://www.cdc.gov/legionella/downloads/toolkit.pdf" target="_blank">Developing a Water Management Program to Reduce Legionella Growth & Spread in Buildings: A Practical Guide to Implementing Industry Standards</a>
+			; US Department of Health and Human Services: Atlanta, GA, USA, 2017. 
+		</li>
+		<br>
+		<li>CDC. 
+			<a href="https://www.cdc.gov/infectioncontrol/pdf/guidelines/environmental-guidelines-P.pdf" target="_blank">Guidelines for Environmental Infection Control in Health-Care Facilities: Recommendations of CDC and the Healthcare Infection Control Practices Advisory Committee (HICPAC)</a>
+			; CDC: Atlanta, GA, USA, 2003. 
+		</li>
+		<br>
+		<li>CDC. 
+			<a href="https://www.cdc.gov/mahc/pdf/2016-mahc-annex-final.pdf" target="_blank">Annex to the Model Aquatic Health Code: Scientific Rationale</a>
+			; CDC: Atlanta, GA, USA, 2016. 
+		</li>
+		<br>
+		<li>Centers for Medicare & Medicaid Services. 
+			<a href="https://www.cms.gov/Medicare/Provider-Enrollment-and-Certification/SurveyCertificationGenInfo/Downloads/Survey-and-Cert-Letter-17-30.pdf" target="_blank">Requirement to Reduce Legionella Risk in Healthcare Facility Water Systems to Prevent Cases and Outbreaks of Legionnaires’ Disease (LD)</a>
+			; Centers for Medicare & Medicaid Services: Baltimore, MD, USA, 2017. 
+		</li>
+		<br>
+		<li>Department of Veterans Affairs. 
+			<a href="https://www.va.gov/vhapublications/ViewPublication.asp?pub_ID=3033" target="_blank">VHA Directive 1061: Prevention of Healthcare-Associated Legionnaires’ Disease and Scald Injury from Potable Water Distribution Systems</a>
+			; Department of Veterans Affairs: Washington, DC, USA, 2014. 
+		</li>
+		<br>
+		<li>Department of Veterans Affairs. 
+			<a href="https://specialpathogenslab.com/wp-content/uploads/2020/05/va-legionella-directive-2008.pdf" target="_blank">VHA Directive 2008-010: Prevention of Legionnaires’ Disease</a>
+			; Department of Veterans Affairs: Washington, DC, USA, 2008. 
+		</li>
+		<br>
+		<li>European Guidelines Working Group. European Technical Guidelines for the Prevention, Control and Investigation, of Infections Caused by Legionella Species. 2017. Available online: 
+			<a href="https://ecdc.europa.eu/sites/portal/files/documents/Legionella%20GuidelinesFinal%20updated%20for%20ECDC%20corrections.pdf" target="_blank">https://ecdc.europa.eu/sites/portal/files/documents/Legionella%20GuidelinesFinal%20updated%20for%20ECDC%20corrections.pdf</a>	
+		</li>
+		<br>
+		<li>Government of Western Australia. 
+			<a href="https://www.commerce.wa.gov.au/sites/default/files/atoms/files/legionnaires-code.pdf" target="_blank">Department of Commerce, Department of Mines and Petroleum Code of Practice: Prevention and Control of Legionnaires’ Disease 2010</a>
+			; Government of Western Australia: Perth, Australia, 2010. 
+		</li>
+		<br>
+		<li>NASEM. 
+			<a href="https://www.ncbi.nlm.nih.gov/books/NBK555109/pdf/Bookshelf_NBK555109.pdf" target="_blank">Management of Legionella in Water Systems</a>
+			; The National Academies Press; National Academies of Sciences, Engineering and Medicine: Washington, DC, USA, 2019. 
+		</li>
+		<br>
+		<li>OSHA. Legionnaires’ Disease: Section II: What Water Systems in Workplaces are Potential Sources of Legionnaires’ Bacteria (LDB)? OSHA: Washington, DC, USA, 1996. 
+		</li>
+		<br>
+		<li>U.S. EPA. 
+			<a href="https://cfpub.epa.gov/ncea/risk/era/recordisplay.cfm?deid=37634" target="_blank">Drinking Water Criteria Document for Legionella (Final Draft)</a>
+			; Environmental Criteria and Assessment Office: Washington, DC, USA, 1985. 
+		</li>
+		<br>
+		<li>UK Department of Health. 
+			<a href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/140105/Health_Technical_Memorandum_04-01_Addendum.pdf" target="_blank">Health Technical Memorandum 04-01: Safe Water in Healthcare Premises. Part C: Pseudomonas Aeruginosa-Advice for Augmented Care Units</a>
+			; UK Department of Health: London, UK, 2017. 
+		</li>
+		<br>
+		<li> World Health Organization. 
+			<a href="https://apps.who.int/iris/handle/10665/43233" target="_blank">Legionella and the Prevention of Legionellosis</a>
+			; Bartram, J., Chartier, Y., Lee, J.V., Pond, K., Surman-Lee, S., Eds.; World Health Organization: Geneva, Switzerland, 2007; ISBN 978-92-4-156297-3. 
+		</li>
+		<br>
+		<li>World Health Organization. 
+			<a href="https://apps.who.int/iris/bitstream/handle/10665/76145/9789241548106_eng.pdf?sequence=1" target="_blank">Water Safety in Buildings</a>
+			; Cunliffe, D., Bartram, J., Briand, E., Charier, Y., Colbourne, J., Drury, D., Lee, J., Schaefer, B., Surman-Lee, S., Eds.; World Health Organization: Geneva, Switzerland, 2011; ISBN 978-92-4-154810-6. 
+		</li>
+		<br>	
+		</ul>
+		</div>
+
+	<div id = "trainings" *ngIf='isTrainings'>
+		<!--<div id = "Trainings" class="tabcontent">-->
+			<h4>Please refer to the below links for trainings on reducing risk for Legionnaires’ disease</h4><br>
+		<ul>
+			<li>
+				<a href="https://www.cdc.gov/nceh/ehs/elearn/prevent-LD-training.html" target="_blank">Preventing Legionnaires’ Disease: A Training on Legionella Water Management Programs (PreventLD Training)</a>
+				<p>&nbsp;&nbsp;- Are you involved in water safety for buildings? Take this training from CDC and partners on creating a water management program to reduce risk for Legionnaires’ disease. PreventLD Training aligns with industry standards (ASHRAE 188) on managing risk for Legionella bacteria. </p>
+			</li>
+			<li>
+				<a href="https://www.nap.edu/resource/25474/interactive/" target="_blank">Interactive Overview of Legionella in Water Systems from National Academy of Sciences</a>
+			</li>
+			<li>
+				<a href="https://eva.ecdc.europa.eu/course/view.php?id=177" target="_blank">ECDC course on Legionnaires’ Disease: Risk Assessment, Outbreak Investigation and Control. </a>
+			</li>
+		</ul>
+	</div>
+
+
+<div class="home" *ngIf = '!isShowAbout && !isShowResources && !isTrainings'> 
+<!--<div id = "Home" class="tabcontent">-->
+<form #userForm="ngForm" (ngSubmit)="onFormSubmit(userForm);showForm=false;" novalidate> 
+	<h5>Answer the following questions to help assess if a water quality management plan is required for your building, and identify building plumbing features/factors (e.g., dead ends, low flow fixtures, temperature settings, time to tap) for which special guidance is warranted.</h5>
+	<br>
+	<h5>Building Questions:</h5>
+	
+	
+	&nbsp;1.	Is your building a healthcare facility where patients stay overnight or does your building house or treat people who have chronic and acute medical problems or weakened immune systems?
+	<br>
+	<input type="radio" value="buidingTypeYes" name="buidingType" [ngModel]="user.buidingType" required #buidingType="ngModel"> Yes
+	&nbsp;&nbsp;<input type="radio" value="buidingTypeNo" name="buidingType" [ngModel]="user.buidingType" required #buidingType="ngModel"> No
+	
+ 	<div *ngIf="buidingType.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br> 
+	&nbsp;2.	Does your building primarily house people older than 65 years (like a retirement home or assisted-living facility)?<br>
+	<input type="radio" value="retirementBuildingYes" name="retirementBuilding" [ngModel]="user.retirementBuilding" required #retirementBuilding="ngModel"> Yes 
+	&nbsp;&nbsp;<input type="radio" value="retirementBuildingNo" name="retirementBuilding" [ngModel]="user.retirementBuilding" required #retirementBuilding="ngModel"> No 
+ 	<div *ngIf="retirementBuilding.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+	&nbsp;3.	Does your building have multiple housing units and a centralized hot water system (like a hotel or high-rise apartment complex)?<br>
+	<input type="radio" value="hotelBuildingYes" name="hotelBuilding" [ngModel]="user.hotelBuilding" required #hotelBuilding="ngModel"> Yes 
+	&nbsp;&nbsp;<input type="radio" value="hotelBuildingNo" name="hotelBuilding" [ngModel]="user.hotelBuilding" required #hotelBuilding="ngModel"> No 
+ 	<div *ngIf="hotelBuilding.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+<br>
+	&nbsp;4. Does your building have more than 10 stories (including basement levels)?<br>
+	<input type="radio" value="basementYes" name="basement" [ngModel]="user.basement" required #basement="ngModel"> Yes 
+	&nbsp;&nbsp;<input type="radio" value="basementNo" name="basement" [ngModel]="user.basement" required #basement="ngModel"> No 
+ 	<div *ngIf="basement.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>
+	<!--<p> &nbsp; &nbsp;4.	Does your building have more than 10 stories (including basement levels)?</p>
+	<input type="radio" value="buildingLevelYes" name="buildingLevel" [ngModel]="user.buildingLevel" required #buildingLevel="ngModel"> Yes <br>
+ 	<input type="radio" value="buildingLevelNo" name="buildingLevel" [ngModel]="user.buildingLevel" required #buildingLevel="ngModel"> No <br>
+ 	<div *ngIf="buildingLevel.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>-->
+
+	<h5>Device Questions:</h5>	 
+
+	&nbsp;5.	Does your building have a cooling tower?<br>
+	<input type="radio" value="coolingTowerYes" name="coolingTower" [ngModel]="user.coolingTower" required #coolingTower="ngModel"> Yes 
+	&nbsp;&nbsp;<input type="radio" value="coolingTowerNo" name="coolingTower" [ngModel]="user.coolingTower" required #coolingTower="ngModel"> No 
+	 <!--<input type="radio" value="coolingTowerDont" name="coolingTower" [ngModel]="user.coolingTower" required #coolingTower="ngModel"> Don't know <br>-->
+
+ 	<div *ngIf="coolingTower.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+	<br>
+	&nbsp;6.	Does your building have a hot tub (also known as a spa) that is not drained between each use?<br>
+	<input type="radio" value="hotTubYes" name="hotTub" [ngModel]="user.hotTub" required #hotTub="ngModel"> Yes 
+	&nbsp;&nbsp;<input type="radio" value="hotTubNo" name="hotTub" [ngModel]="user.hotTub" required #hotTub="ngModel"> No 
+ 	<div *ngIf="hotTub.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+	<br>
+	&nbsp;7.	Does your building have a decorative fountain? <br>
+	<input type="radio" value="decoFounYes" name="decoFoun" [ngModel]="user.decoFoun" required #decoFoun="ngModel"> Yes 
+	&nbsp;&nbsp;<input type="radio" value="decoFounNo" name="decoFoun" [ngModel]="user.decoFoun" required #decoFoun="ngModel"> No 
+ 	<div *ngIf="decoFoun.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+	<br>
+	&nbsp;8.	Does your building have a centrally-installed mister, atomizer, air washer, or humidifier?<br>
+	<input type="radio" value="humidifierYes" name="humidifier" [ngModel]="user.humidifier" required #humidifier="ngModel"> Yes 
+	&nbsp;&nbsp;<input type="radio" value="humidifierNo" name="humidifier" [ngModel]="user.humidifier" required #humidifier="ngModel"> No 
+ 	<div *ngIf="humidifier.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		<br>
+	&nbsp;9.	Does your building have dead ends?<br>
+	<input type="radio" value="deadEndYes" name="deadEnd" [ngModel]="user.deadEnd" required #deadEnd="ngModel"> Yes 
+	&nbsp;&nbsp;<input type="radio" value="deadEndNo" name="deadEnd" [ngModel]="user.deadEnd" required #deadEnd="ngModel"> No 
+ 	<div *ngIf="deadEnd.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+	<!--<br>
+	&nbsp;10. Does your building have thermostatic mixing valves?<br>
+	<input type="radio" value="tmvYes" name="tmv" [ngModel]="user.tmv" required #tmv="ngModel"> Yes 
+	&nbsp;&nbsp;<input type="radio" value="tmvNo" name="tmv" [ngModel]="user.tmv" required #tmv="ngModel"> No 
+ 	<div *ngIf="tmv.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>-->
+	<br>
+	&nbsp;10. Does your building have low flow fixtures? (As per EPA, guidlines for low flow fixtures are: Shower heads- 2.0 gpm,
+		Faucets- 1.5 gpm, Toilet- 1.28 gpf)
+		<br>
+	<input type="radio" value="llfYes" name="llf" [ngModel]="user.llf" required #llf="ngModel"> Yes 
+	&nbsp;&nbsp;<input type="radio" value="llfNo" name="llf" [ngModel]="user.llf" required #llf="ngModel"> No 
+ 	<div *ngIf="llf.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>
+	<h5>Other Questions:</h5>	
+	
+	&nbsp;11. Does your building have Electronic faucets?<br>
+	<input type="radio" value="efYes" name="ef" [ngModel]="user.ef" required #ef="ngModel"> Yes 
+	&nbsp;&nbsp;<input type="radio" value="efNo" name="ef" [ngModel]="user.ef" required #ef="ngModel"> No 
+ 	<div *ngIf="ef.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+	<br>
+	&nbsp;12. Does your building have Showers with flexible hoses?<br>
+	<input type="radio" value="sfhYes" name="sfh" [ngModel]="user.sfh" required #sfh="ngModel"> Yes 
+	&nbsp;&nbsp;<input type="radio" value="sfhNo" name="sfh" [ngModel]="user.sfh" required #sfh="ngModel"> No 
+ 	<div *ngIf="sfh.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+	<!--<h2>Questions about building type:</h2>
+	<div>-->
+
+    <!--<p> &nbsp; &nbsp;1.	Please tell us about the water system for the building you manage. Options to choose from:</p>
+
+ <input type="radio" value="male" name="gender" [ngModel]="user.gender" required #gender="ngModel"> Hospital <br>
+ <input type="radio" value="female" name="gender" [ngModel]="user.gender" required #gender="ngModel"> Residence primarily for those >=65 years old <br>
+ <input type="radio" value="third" name="gender" [ngModel]="user.gender" required #gender="ngModel"> Hotel or High-rise apartment - multiple housing units and a centralized hot water system<br>
+
+		 <div *ngIf="gender.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 </div>
+		 <br>
+		 <br>-->
+
+		<!-- <p> &nbsp; &nbsp;2. Is it over 10 stories (including basement)?</p>
+<input type="radio" value="male" name="uname" [ngModel]="user.userName" required #uname="ngModel"> Yes <br>
+ <input type="radio" value="female" name="uname" [ngModel]="user.userName" required #uname="ngModel"> No <br>
+ <div *ngIf="uname.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>
+
+ <h2>Questions about hot water system:</h2> 
+
+ <p> &nbsp; &nbsp;1. What is the type of hot water system does your building have?</p>
+ <input type="radio"  value="gas" name="gs" [ngModel]="user.headfield" required #gs="ngModel"> Gas <br>
+ <input type="radio" value="electric" name="gs" [ngModel]="user.headfield" required #gs="ngModel"> Electric <br>
+ <input type="radio" value="third1" name="gs" [ngModel]="user.headfield" required #gs="ngModel">Steam <br>
+  <input type="radio" value="female1" name="gs" [ngModel]="user.headfield" required #gs="ngModel"> Other <br>
+<br>
+ <div *ngIf="gs.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+<br>
+<p> &nbsp; &nbsp;2. Does it have a recirculation loop?</p>
+<input type="radio" value="yes" name="rc" [ngModel]="user.rcAccepted" required #rc="ngModel"> Yes <br>
+ <input type="radio" value="no" name="rc" [ngModel]="user.rcAccepted" required #rc="ngModel"> No <br>
+<div *ngIf="rc.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>-->
+
+  <!--<div *ngIf="ShowHideDiv()">	 
+<p> &nbsp; &nbsp;3.	Does it have a recirculation loop?</p>
+<input type="radio" value="yes" name="rc" [ngModel]="user.isTCAccepted" required #rc="ngModel"> Yes <br>
+ <input type="radio" value="no" name="rc" [ngModel]="user.isTCAccepted" required #rc="ngModel"> No <br>
+ </div>
+ <div *ngIf="rc.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>
+		 <br>
+		 <br>-->
+<br>
+<h5>Water Temperature Questions: </h5>
+
+&nbsp;13.  How long does it take for the hot-water to reach a steady temperature from the time when the hot-water valve is opened at its full capacity to the point when hot-water temperature stabilizes? (Note: Keep the cold-water valve remains closed for the entire duration)<br>
+<input type="radio" value="timeToTapInputa" name="timeToTapInput" [ngModel]="user.timeToTapInput" required #timeToTapInput="ngModel"> > 60 seconds <br>
+<input type="radio" value="timeToTapInputb" name="timeToTapInput" [ngModel]="user.timeToTapInput" required #timeToTapInput="ngModel"> 31 – 60 seconds <br>
+<input type="radio" value="timeToTapInputc" name="timeToTapInput" [ngModel]="user.timeToTapInput" required #timeToTapInput="ngModel"> 11 – 30 seconds  <br>
+<input type="radio" value="timeToTapInputd" name="timeToTapInput" [ngModel]="user.timeToTapInput" required #timeToTapInput="ngModel"> 1 – 10 seconds <br>
+<input type="radio" value="timeToTapInpute" name="timeToTapInput" [ngModel]="user.timeToTapInput" required #timeToTapInput="ngModel"> Don’t know 
+<div *ngIf="timeToTapInput.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+		 please select one of the field. 
+	</div>
+<!--<label for="timeToTap">Please enter your answer here: </label> 
+ <input type="text" id="timeToTapInput"  name="timeToTapInput" (keyup)="onKey($event)"> 
+ <br>-->
+
+<!-- <br>
+	&nbsp;10. Does your building have thermostatic mixing valves?<br>
+	<input type="radio" value="tmvYes" name="tmv" [ngModel]="user.tmv" required #tmv="ngModel" (change)="radioChanged($event)"> Yes 
+ 	<input type="radio" value="tmvNo" name="tmv" [ngModel]="user.tmv" required #tmv="ngModel"> No 
+ 	<div *ngIf="tmv.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  please select one of the field. 
+		 </div>-->
+<br><br>
+
+&nbsp;14. What is the hot-water temperature at faucet-in-use in your building? (i.e., when only the hot-water tap is open and the cold-water tap is completely closed and the faucet is running for a sufficiently long time, i.e. hot-water temperature is stabilized)<br>
+ <input type="radio" value="pou1" name="pou" [ngModel]="user.pou" required #pou="ngModel"> ≥ 55 ℃ [ ≥ 131 °F ]<br>
+ <input type="radio" value="pou2" name="pou" [ngModel]="user.pou" required #pou="ngModel"> 51 – 54 ℃  [ 123.8 – 129.2 °F ] <br>
+ <input type="radio" value="pou3" name="pou" [ngModel]="user.pou" required #pou="ngModel"> 49 – 50 ℃ [ 120.2 – 122 °F ]<br>
+ <input type="radio" value="pou4" name="pou" [ngModel]="user.pou" required #pou="ngModel"> 43 – 48 ℃ [ 109.4 – 118.4 °F ] <br>
+ <input type="radio" value="pou5" name="pou" [ngModel]="user.pou" required #pou="ngModel"> < 43 ℃  [ < 109.4 °F ] 
+ <div *ngIf="pou.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+		  please select one of the field. 
+	 </div>
+
+<br><br>	 
+
+
+<!--&nbsp;16. Which type of thermostatic mixing valve does your building have? <br>
+<input type="radio" value="tmvCent1" name="tmvCent" [ngModel]="user.tmvCent" required #tmvCent="ngModel"> Not present<br>
+<input type="radio" value="tmvCent2" name="tmvCent" [ngModel]="user.tmvCent" required #tmvCent="ngModel"> Centralized <br>
+<input type="radio" value="tmvCent3" name="tmvCent" [ngModel]="user.tmvCent" required #tmvCent="ngModel"> Individual fixtures or Units
+<div *ngIf="tmvCent.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+		  please select one of the field. 
+	</div>
+
+<br><br>-->
+
+
+&nbsp;15.  Does your building have thermostatic mixing valves?? <br>
+<input type="radio" value="tmvYes" name="tmv" [ngModel]="user.tmv" required #tmv="ngModel" (change)="radioChangedYes($event)"> Yes
+&nbsp;&nbsp;<input type="radio" value="tmvNo" name="tmv" [ngModel]="user.tmv" required #tmv="ngModel" (change)="radioChangedNo($event)"> No
+<div *ngIf="tmv.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+		  please select one of the field. 
+	</div>
+
+<br><br>
+
+<div *ngIf="ShowHideDiv()">
+&nbsp;Is the TMV centralized or are separate valves provided for individual fixtures? <br>
+<input type="radio" value="tmvCent1" name="tmvCent" [ngModel]="user.tmvCent" required #tmvCent="ngModel" checked="checked"> Individual
+&nbsp;&nbsp;<input type="radio" value="tmvCent2" name="tmvCent" [ngModel]="user.tmvCent" required #tmvCent="ngModel"> Centralized
+<div *ngIf="tmvCent.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+		  please select one of the field. 
+	</div>
+	<br><br>
+</div>
+
+
+&nbsp;16.What is the water heater temperature setpoint in your building?<br>
+<input type="radio" value="setpoint1" name="setpoint" [ngModel]="user.setpoint" required #setpoint="ngModel"> ≥ 60 ℃ [ ≥ 140 °F] <br>
+<input type="radio" value="setpoint2" name="setpoint" [ngModel]="user.setpoint" required #setpoint="ngModel"> 55 – 59 ℃ [ 131 – 138.2 °F]<br>
+<input type="radio" value="setpoint3" name="setpoint" [ngModel]="user.setpoint" required #setpoint="ngModel"> 51 – 54 ℃  [ 123.8 – 129.2 °F ] <br>
+<input type="radio" value="setpoint4" name="setpoint" [ngModel]="user.setpoint" required #setpoint="ngModel"> 49 – 50 ℃ [ 120.2 – 122 °F ]<br>
+<input type="radio" value="setpoint5" name="setpoint" [ngModel]="user.setpoint" required #setpoint="ngModel"> 43 – 48 ℃ [ 109.4 – 118.4 °F ] <br>
+<input type="radio" value="setpoint6" name="setpoint" [ngModel]="user.setpoint" required #setpoint="ngModel"> < 43 ℃  [ < 109.4 °F ] 
+<div *ngIf="setpoint.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+		  please select one of the field. 
+	 </div>
+
+<br><br>
+
+&nbsp;17. What is the measured disinfectant residual level (mg/L) in your plumbing system?<br>
+ <input type="radio" value="residualLevel1" name="residualLevel" [ngModel]="user.residualLevel" required #residualLevel="ngModel"> < 0.2 mg/L <br>
+ <input type="radio" value="residualLevel2" name="residualLevel" [ngModel]="user.residualLevel" required #residualLevel="ngModel"> ≥ 0.2 mg/L and < 0.5 mg/L<br>
+ <input type="radio" value="residualLevel3" name="residualLevel" [ngModel]="user.residualLevel" required #residualLevel="ngModel"> ≥ 0.5 mg/L and < 1 mg/L<br>
+ <input type="radio" value="residualLevel4" name="residualLevel" [ngModel]="user.residualLevel" required #residualLevel="ngModel"> ≥ 1 mg/L and < 2 mg/L<br>
+ <input type="radio" value="residualLevel5" name="residualLevel" [ngModel]="user.residualLevel" required #residualLevel="ngModel">  ≥ 2 mg/L and < 3 mg/L <br>
+ <input type="radio" value="residualLevel6" name="residualLevel" [ngModel]="user.residualLevel" required #residualLevel="ngModel"> > 3 mg/L <br>
+ <input type="radio" value="residualLevel7" name="residualLevel" [ngModel]="user.residualLevel" required #residualLevel="ngModel"> Don’t know 
+ <div *ngIf="residualLevel.invalid && userForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+		  please select one of the field.  
+	 </div>
+
+<br>
+<br>
+<!--<h2>Other Questions:</h2> 
+<p> &nbsp; &nbsp;1.	Does your system have any spots that might cause water quality problems or that you need to keep an eye on? (Please select all applicable options)</p>
+<input type="checkbox" (change)="onDeadEnds($event)">
+ <label>Dead ends</label><br>
+ <input type="checkbox" (change)="onThermo($event)">
+ <label>Thermostatic Mixing Valves</label><br>
+ <input type="checkbox" (change)="onLlf($event)">
+ <label>Low flow fixtures</label><br>
+ <input type="checkbox" (change)="onCt($event)">
+ <label>Cooling towers</label><br>
+ <input type="checkbox" (change)="onCim($event)">
+ <label>Centrally installed mister, atomizer, air washer, or humidifier</label><br>
+ <input type="checkbox" (change)="onDeco($event)">
+ <label>Decorative fountain</label><br>
+ <input type="checkbox" (change)="onSpa($event)">
+ <label>Hot tubs (or spa)</label><br>
+ <input type="checkbox" (change)="onFaucet($event)">
+ <label>Electronic faucets </label><br>
+ <input type="checkbox" (change)="onHose($event)">
+ <label>Showers with flexible hoses </label><br>-->
+
+	<p><button class="button" (click)="open(content)" >Submit</button> &nbsp;
+		<button type="button" class="button" (click)="resetForm(userForm)" >Reset</button></p>
+
+		<ng-template #content let-modal>
+			<div class="modal-header">
+			  <h4 class="modal-title" id="modal-basic-title">Disclaimer</h4>
+			  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+			  <form>
+				<div class="form-group">
+				  <p>The PIPE DST includes a broad database to address complicated water quality issues in building water systems to reduce the risk of contamination and waterborne disease outbreaks but no one resource can be comprehensive. Premise plumbing water systems vary significantly. There may be no substitute for measuring water quality in your building. In the absence of measurement, no system can provide any assurance that water quality objectives are being met.  
+					<br>
+					The PIPE DST is for informational purposes only for the decision-makers, and it does not substitute for engineering guidance for water management. The output report provided by this DST does not judge which source of guidance is best but does provide citations to full documents for the user to review in-depth as needed to make well-informed decisions. </p>
+				</div>
+			  </form>
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
+			</div>
+		  </ng-template>
+		
+		 <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>-->
+
+
+<!--<div #myDiv>-->
+<div #myDiv *ngIf="isValidFormSubmitted" [ngClass] = "'success'" style="border-style: hidden;"> 
+
+	<div *ngIf="showForm">	
+		<h5>Based on your input, we have identified the following features for which your building needs a water management program:</h5>
+
+		<div class="container">
+	
+			<div *ngIf="onBuilding()">- Hot and cold water distribution system</div>
+			<div *ngIf="onCt()">- Cooling tower</div>
+			<div *ngIf="onHt()">- Hot tub</div>
+			<div *ngIf="onDecoFoun()">- Decorative fountain</div>
+			<div *ngIf="onHumid()">- Centrally-installed mister, atomizer, air washer, or humidifier</div>
+			<div *ngIf="onThermoMix()">- Thermostatic mixing valves</div>
+			<div *ngIf="onLowFixtures()">- Low flow fixtures</div>
+			<div *ngIf="onDe()">- Dead ends</div>
+			<div *ngIf="onEf()">- Electronic faucets</div>
+			<div *ngIf="onSfh()">- Showers with flexible hoses</div> <br>
+		
+			<div *ngIf="onBuilding()"><h5>For more information on water management plan, please refer to the 
+				<a href="http://www.pages.drexel.edu/~lm3388/DSTProject/assets/images/water-supply-management-plan-template.pdf" target="_tab">document</a></h5>
+		
+			</div>
+		</div>	 
+		<br>
+	
+	<!--Based on your input, we have identified the following features for which your building needs a water management program:
+		<div *ngIf="onBuilding()">- Hot and cold water distribution system</div>
+		<div *ngIf="onCt()">- Cooling tower</div>
+		<div *ngIf="onHt()">- Hot tub</div>
+		<div *ngIf="onDecoFoun()">- Decorative fountain</div>
+		<div *ngIf="onHumid()">- Centrally-installed mister, atomizer, air washer, or humidifier</div>
+		<div *ngIf="onThermoMix()">- Thermostatic mixing valves</div>
+		<div *ngIf="onLowFixtures()">- Low flow fixtures</div>
+		<div *ngIf="onDe()">- Dead ends</div>
+		<div *ngIf="onEf()">- Electronic faucets</div>
+		<div *ngIf="onSfh()">- Showers with flexible hoses</div>
+		
+	<br>
+    <div *ngIf="onBuilding()"><h3>For more information on water management plan, please refer to the 
+		<a href="http://www.pages.drexel.edu/~lm3388/DSTProject/assets/images/water-supply-management-plan-template.pdf" target="_tab">document</a></h3>
+
+	</div>-->
+	
+	<!--</div>
+
+	<div *ngIf="showForm">
+	<p><strong>Results for Hot Water System: </strong></p>
+	<img src="../assets/images/electric.png" width="500px" height="180px">-->
+
+
+	<!--<h3>For more information on the water distrubtion system please refer to the below document:</h3>
+	<table>
+		<tr *ngIf="onBuilding()">
+			<td>Hot and cold water distribution system</td>
+			<td><a href="../assets/images/water-supply-management-plan-template.pdf" target="_tab">click here</a></td>
+		</tr>
+	</table>-->
+	<h5>
+		For more information on the features required for your building, please refer to the below content:
+	</h5>
+	
+	<div class="container">
+	<table  id = "results">
+		<tr>
+			<th>Feature</th>
+			<th>Potential concerns</th>
+			<th>Suggested remedial actions</th>
+		</tr>
+		<tr  *ngIf="onCt()">
+			<td>Cooling tower</td>
+			<!--<td><img src="../assets/images/ct.png" width="500px" height="150px"></td>-->
+			<td></td>
+			<td></td>
+		</tr>
+		<tr *ngIf="onHt()">
+			<td>Hot tub</td>
+			<!--<td><img src="../assets/images/spa.png" width="500px" height="150px"></td>-->
+			<td>In hot tubs and spas, several different conditions can influence Legionella growth and can increase contamination risk.
+				<br>
+				1.	The potential of high organic content in the pools increases Legionella growth potential. Water not drained causes the accumulation of nutrients in the multi-body spas. (WHO, 2007)
+				<br>
+				2.	Spas and hot tubs come in different shapes and sizes. Overloading with bathers or using beyond design stipulated criteria can increase the growth of Legionella and other pathogens. (European Guidelines Working Group, 2017)
+				<br>
+				3.	Static water parts, e.g., near underwater lightings and pumps, can assist in Legionella growth. (WHO, 2007)
+				<br>
+				4.	Water jets on for prolonged durations at the spas can dilute the disinfectant residual when sufficient recovery time is not allowed. (WHO, 2007)
+				<br>
+				5.	Piping systems in thermal water systems can have regions of low flow that are challenging to clean and can allow biofilm growth, which enables Legionella growth. (WHO, 2007)
+				<br>
+				6.	Natural water spas can have high mineral contents that can deposit on the transmission pipelines, providing increased surface area for bacterial colonization. (WHO, 2007)
+				<br>
+				7.	Spas and hot tubs mostly maintain temperatures higher than 30 C, an ideal condition for the growth of Legionella and other water-borne pathogens. (European Guidelines Working Group, 2017)
+				Several factors can increase the bathers' risk of contamination by Legionella.
+				<br>
+				1.	High humidity environments, e.g., spa or hot tub rooms, increase the risk of inhalation of thermal water, hence increasing the risk of exposure to Legionella. (WHO, 2007)
+				<br>
+				2.	Continuous use of water jets at a spa or hot tubs can increase aerosol production, leading to a higher risk of bathers' inhalation, and if the Legionella growth rate is high in pool water, it can increase the risk of contamination. (European Guidelines Working Group, 2017)
+				<br>
+				3.	Prolonged exposure to spas and hot tubs can increase contamination risk (WHO, 2007, European Guidelines Working Group, 2017)
+				</td>
+			<td>Guidance’s can be followed to reduce potential conditions for Legionella growth and limiting the risk of contamination for hot tub and spa users.<br>
+				1.	If spas have water filters or cartridge filters, they should be regularly cleaned and checked for their performance. Following a daily routine of disinfection with a disinfectant is necessary for the guidance of the disinfectant manufacturer's instructions. While cleaning, caution should be maintained, so the staff does not get contaminated with residuals on cartridge filters. Once the filters are cleaned, and they should be re-installed as per the manufacturer's design. (ANSI/ASHRAE Standard 188-2018, MAHC ANNEX, 2016)<br>
+				2.	The whole system, including the balance tank, should be cleaned at least once a week, and half of the volume of water be replaced each day. (WHO, 2007)<br>
+				3.	Periodic cleaning of water spray hoses can be performed with at least 5 mg/l of free chlorine. (WHO, 2007)<br>
+				4.	Heterotrophic aerobic bacteria colony count below the maximum level suggested by local governance or less than equal to 200 CFU/ml. (ANSI/ASHRAE Standard 188-2018)<br>
+				5.	Maintain 15 ppm for small hydrotherapy tanks and 2-5 ppm chlorine residual for water and whirlpools and whirlpool spas. Water pH should be slightly acidic when enhancing biocidal activity. (CDC, 2003; European Guidelines Working Group, 2017)<br>
+				6.	A pH range of 7.2-7.8 for chlorine and 7.2-8 for bromine-based or other non-chlorine based biocide is recommended. (WHO 2007)<br>
+				7.	Residual chlorine range of 3-10 ppm is also suggested in spa water, where higher than 5 ppm is only recommended when bathers are absent. (CDC MAHC ANNEX, 2016)<br>
+				8.	If bromine is used in place of chlorine, the available bromine concentration should be maintained at a minimum of 6 ppm in water. (CDC MAHC ANNEX, 2016; European Guidelines Working Group, 2017)<br>
+				9.	Regular (monthly) microbial testing to be performed on spa water to check Legionella and other microbial activity to remain under acceptable concentrations. If any form of contamination is discovered, the spa should be discontinued from service immediately, and a rigorous cleaning procedure should be followed. (ANSI/ASHRAE Standard 188-2018)<br>
+				10.	Staff members who are responsible for the management and maintaining of the spas should be well versed with the Legionella risk monitoring and remedial steps and as per the guidance of the spa manufacturer as well as local and national guidelines. (WHO, 2007)<br>
+				11.	Thorough record-keeping of maintenance and remediation steps should be kept assisting disease tracking and future management of the spa. (WHO, 2007)<br>
+				Bathers should be suggested to follow minimum guidelines when planning to use the spa to prevent the buildup of organic matter in a spa and reduce the potential of Legionella growth.<br>
+				1.	Shower before using the spa or hot water tubs (WHO, 2007)<br>
+				2.	Follow spa bather loading capacity every time (WHO, 2007)<br>
+				3.	Limit the use of water jets (WHO, 2007)<br>
+				4.	Limit time spent on the pool (WHO, 2007)<br>
+				</td>
+		</tr>
+		<tr  *ngIf="onDecoFoun()">
+			<td>Decorative fountain</td>
+			<!--<td><img src="../assets/images/deco.png" width="500px" height="150px"></td>-->
+			<td></td>
+			<td></td>
+		</tr>
+		<tr  *ngIf="onHumid()">
+			<td>Centrally-installed mister, atomizer, air washer, or humidifier</td>
+			<!--<td><img src="../assets/images/cim.png" width="500px" height="150px"></td>-->
+			<td></td>
+			<td></td>
+		</tr>
+		<tr  *ngIf="onThermoMix()">
+			<td>Thermostatic mixing valves</td>
+			<!--<td><img src="../assets/images/thermo2.png" width="500px" height="150px"></td>-->
+			<td>Thermostatic mixing valves (TMVs), or anti-scald valves, prevent water hot enough to cause burns from passing through a fixture. They allow higher water temperatures to be used upstream to their installation point and are thereby helpful in controlling the growth pathogens (like Legionella) in plumbing systems that can cause disease. Unfortunately, if not maintained carefully they can instead promote the growth of opportunistic pathogens. These concerns with TMVs and some of the available guidance to address them are summarized below.<br>
+				The following aspects can increase Legionella risk from the use of TMVs:<br>
+				1.	Materials used in TMVs can promote Legionella and biofilm growth (NASEM, 2019).<br>
+				2.	TMVs whose designs can cause backflow in either the cold or hot water pipes are prone to allow stagnation of water in the water pipes at a temperature range suitable for Legionella growth (NASEM, 2019).<br>
+				3.	In old pipes, rusting, and release of rust particles within the pipe can accumulate at the valves within TMV, which can provide surfaces for Legionella growth (NASEM, 2019).<br>
+				4.	TMVs fitted far from the POU, or a single common TMV with multiple POUs can have pipe length with water temperature suitable for Legionella growth. Tepid water or dead water volume at these pipe lengths are highly susceptible to Legionella growth (European Guidelines Working Group, 2017). <br>
+				</td>
+				<td>The following guidelines can be followed to reduce the potential of Legionella growth and the risk of contamination when using TMVs:<br>
+					1.	Materials with higher potential to enhance Legionella growth (e.g., natural rubber, linseed oil-based jointing compounds, fiber washers) should be avoided as internal components of TMV and mixing valves' designs (CDC, 2003; European Guidelines Working Group, 2017; NASEM, 2019).<br>
+					2.	Placing the TMVs as close as possible to the faucet reduces the dead water volumes and provides easy access for cleaning and maintenance of the TMVs  (CDC, 2003; Department of Veterans Affairs, 2014; NASEM, 2019).<br>
+					3.	TMVs should have an integrated check valve to prevent backflow into cold and hot water pipes. Also, designs that have no or minimal tepid water should be preferred (NASEM, 2019).<br>
+					4.	TMVs can be avoided completely if the temperature of water at fixtures does not possess a high risk of scalding. Installing TMVs can provide additional surface area that can increase Legionella growth potential (European Guidelines Working Group, 2017; NASEM, 2019)<br>
+					5.	TMVs are prone to failures if not manufactured with good design and robust materials. If they are installed, regular maintenance is necessary for repair in case of failures (NASEM, 2019).<br>
+					</td>
+		</tr>
+		<tr  *ngIf="onLowFixtures()">
+			<td>Low flow fixtures</td>
+			<!--<td><img src="../assets/images/llf.png" width="500px" height="150px"></td>-->
+			<td>•	Low flow fixtures can increase Legionella risk due to:<br>
+					increase in water age, <br>
+					reducing hot water temperature, <br>
+					reducing the residual disinfectant concentration<br>
+					sediment accumulation and hence faster disinfectant consumption<br>
+				•	Low flow fixtures also take a longer flushing time for the required volume of water to disinfect the building water system.<br>
+				•	Additionally, low flow fixtures can prevent adequate hot and cold water mixing at the TMVs and reduce the effectiveness of TMV's scalding prevention property. <br>
+				</td>
+				<td>•	Avoid using low flow fixtures, particularly in hospitals, long term care facilities, and other high-risk buildings (NASEM, 2019, Department of Veteran Affairs, 2014, and ANSI/ASREE standard 188, 2018) <br>
+					•	Irregularly used low flow fixtures must be flushed a minimum two times a week. <br>
+					•	Compared to other fixtures, low flow fixtures should be monitored more often for Legionella risk – including monitoring hot water temperature and residual concentration. <br>
+					</td>
+		</tr>
+		<tr  *ngIf="onDe()">
+			<td>Dead ends</td>
+			<!--<td><img src="../assets/images/deadEnds.png" width="500px" height="150px"></td>-->
+			<td></td>
+			<td></td>
+		</tr>
+		<tr  *ngIf="onEf()">
+			<td>Electronic faucets</td>
+			<!--<td><img src="../assets/images/faucet.png" width="500px" height="150px"></td>-->
+			<td>Electronic faucets are identified as potential points of concern for Legionella growth risk in building water systems because (NASEM, 2019)<br>
+				•	Sometimes the materials used in these faucets can support biofilm growth <br>
+				•	They are usually used in combination with TMVs which can provide a locally favorable temperature regime for Legionella risk<br>
+				•	They may provide for pockets of stagnant water within the faucets with increased water age that allows for Legionella growth<br> 
+				•	They may provide shelter against disinfection (Sydnor et al., 2012).
+				</td>
+			<td>•	Use design materials that minimize Legionella growth.(NASEM, 2019) <br>
+				•	Use simple designs that hold minimal tepid water volumes.(NASEM, 2019)
+				</td>
+		</tr>
+		<tr  *ngIf="onSfh()">
+			<td>Showers with flexible hoses</td>
+			<!--<td><img src="../assets/images/hose.png" width="500px" height="150px"></td>-->
+			<td>Showers with flexible hoses are a potential risk for Legionella growth because<br>
+				•	The synthetic/plastic materials used provide surfaces for biofilm growth.<br>
+				•	Prone to store tepid water when not in use<br>
+				
+				</td>
+			<td>CDC 2013, CDC 2017, CMS 2017, European Guidelines Working Group, 2017, ANSI/ASHRAE Standard 188-2018)<br>
+				•	Need regular monitoring of Legionella risk.<br>
+				•	Use flexible shower hoses materials that prevent Legionella growth.<br>
+				•	Care should be taken to prevent the store of tepid water when not in use.<br>
+				•	Designs that have a self-draining feature for the pipe length between the control valve and shower head should be preferred.
+				
+				</td>
+		</tr>
+	</table>
+	</div>
+
+	<br>
+		<h5>Results for Water Temperature: </h5>
+		<div class="container" *ngIf="onTimeToTap()">
+		<p>{{results}}</p>
+			<img src="http://www.pages.drexel.edu/~lm3388/DSTProject/assets/images/timeToTap.PNG" width="800px" height="120px">
+		</div>
+		<br>
+	
+		<h5>Suggested Management Recommendations​ for Legionella Control and Scaling Risks in Premise Plumbing:</h5>
+		<div class = "container" *ngIf="onTempDecisionTree()">
+
+		<div *ngIf="onOutput1()">
+			<ul>
+				<li>
+					<p>Consider adding centralized or individual TMV, but be aware of maintenance issues with TMVs.</p>
+				</li>
+				<li>
+					<p>Reduce set point temperature close to 60 ℃.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput2()">
+			<ul>
+				<li>
+					<p>Consider adding centralized or individual TMVs, but be aware of maintenance issues with TMVs.</p>
+				</li>
+			</ul>
+		</div>
+
+		<div *ngIf="onOutput3()">
+			<ul>
+				<li>
+					<p>Consider adding centralized or individual TMV, but be aware of maintenance issues with TMVs.</p>
+				</li>
+				<li>
+					<p>Reduce set point temperature close to 60 ℃.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput4()">
+			<ul>
+				<li>
+					<p>Consider adding centralized or individual TMVs, but be aware of maintenance issues with TMVs.</p>
+				</li>
+			</ul>
+		</div>
+
+		<div *ngIf="onOutput5()">
+			<ul>
+				<li>
+					<p>Reduce set point temperature close to 60 ℃</p>
+				</li>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput6()">
+			<ul>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+			</ul>
+		</div>
+
+		<div *ngIf="onOutput7()">
+			<ul>
+				<li>
+					<p>Reduce set point temperature close to 60 ℃.</p>
+				</li>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+				<li>
+					<p>Consider adding individual TMV.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput8()">
+			<ul>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+				<li>
+					<p>Consider adding individual TMV.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput9()">
+			<ul>
+				<li>
+					<p>Reduce set point temperature close to 60 ℃.</p>
+				</li>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		
+		<div *ngIf="onOutput10()">
+			<ul>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput11()">
+			<ul>
+				<li>
+					<p>Reduce set point temperature close to 60 ℃</p>
+				</li>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput12()">
+			<ul>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput13()">
+			<ul>
+				<li>
+					<p>Generally Ok. No management recommendations required.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput14()">
+			<ul>
+				<li>
+					<p>Consider adding centralized or individual TMVs, but be aware of maintenance issues with TMVs.</p>
+				</li>
+				<li>
+					<p>Consider increasing set point to 60 ℃</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput15()">
+			<ul>
+				<li>
+					<p>Generally Ok. No management recommendations required.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput16()">
+			<ul>
+				<li>
+					<p>Consider adding centralized or individual TMVs, but be aware of maintenance issues with TMVs.</p>
+				</li>
+				<li>
+					<p>Consider increasing set point to 60 ℃.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput17()">
+			<ul>
+				<li>
+					<p>Generally Ok. No management recommendations required.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput18()">
+			<ul>
+				<li>
+					<p>Consider increasing set point to 60 ℃.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput19()">
+			<ul>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput20()">
+			<ul>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+				<li>
+					<p>Consider increasing set point to 60 ℃.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput21()">
+			<ul>
+				<li>
+					<p>Generally Ok. No management recommendations required.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput22()">
+			<ul>
+				<li>
+					<p>Consider increasing set point to 60 ℃.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput23()">
+			<ul>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		
+		<div *ngIf="onOutput24()">
+			<ul>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+				<li>
+					<p>Consider increasing set point to 60 ℃.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput25()">
+			<ul>
+				<li>
+					<p>Check for pipe insulation.</p>
+				</li>
+				<li>
+					<p>As a temporary measure, consider increasing set point temperature until POU is close to 49-50 ℃.</p>
+				</li>
+				<li>
+					<p>Consider adding centralized or individual TMV for better control,, but be aware of maintenance issues with TMVs.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput26()">
+			<ul>
+				<li>
+					<p>Increasing set point temperature to > 60 ℃.</p>
+				</li>
+				<li>
+					<p>Consider adding centralized or individual TMV for better control, but be aware of maintenance issues with TMVs.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput27()">
+			<ul>
+				<li>
+					<p>Check for pipe insulation.</p>
+				</li>
+				<li>
+					<p>As a temporary measure, consider increasing set point temperature until POU is close to 49-50 ℃.</p>
+				</li>
+				<li>
+					<p>Consider adding centralized or individual TMV for better control,, but be aware of maintenance issues with TMVs.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput28()">
+			<ul>
+				<li>
+					<p>Increasing set point temperature to > 60 ℃.</p>
+				</li>
+				<li>
+					<p>Consider adding centralized or individual TMV for better control, but be aware of maintenance issues with TMVs.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput29()">
+			<ul>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+				<li>
+					<p>Check pipe insulation.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput30()">
+			<ul>
+				<li>
+					<p>Increasing set point temperature to > 60 ℃.</p>
+				</li>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput31()">
+			<ul>
+				<li>
+					<p>Check pipe insulation.</p>
+				</li>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+				<li>
+					<p>Consider adding individual TMV.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput32()">
+			<ul>
+				<li>
+					<p>Increasing set point temperature to > 60 ℃.</p>
+				</li>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+				<li>
+					<p>Consider adding individual TMV.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput33()">
+			<ul>
+				<li>
+					<p>Check for pipe insulation.</p>
+				</li>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput34()">
+			<ul>
+				<li>
+					<p>Increasing set point temperature to > 60 ℃.</p>
+				</li>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput35()">
+			<ul>
+				<li>
+					<p>Check for pipe insulation.</p>
+				</li>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		<div *ngIf="onOutput36()">
+			<ul>
+				<li>
+					<p>Increasing set point temperature to > 60 ℃.</p>
+				</li>
+				<li>
+					<p>Check maintenance issues with TMV.</p>
+				</li>
+			</ul>
+			
+		</div>
+
+		</div>
+		<br>
+
+		<!--<h5>Setpoint results:</h5>
+		<div class="container" *ngIf="onSetpoint()">
+		<p>{{setpointResults}}</p>
+			<img src="http://www.pages.drexel.edu/~lm3388/DSTProject/assets/images/setpoint.PNG" width="450px" height="350px">	
+		</div>
+
+		<br>-->
+
+		<h5>Residual results:</h5>
+		<div class="container" *ngIf="onResidualLevel()">
+		<p>{{residualResults}}</p>
+			<img src="http://www.pages.drexel.edu/~lm3388/DSTProject/assets/images/residual.PNG" width="800px" height="120px">	
+		</div>	
+	<!--<div>
+		<p><strong>Results for Water Quality Problems:</strong></p>
+		<div *ngIf="deadEnds"><p>For Dead Ends</p><img src="../assets/images/deadEnds.png" width="500px" height="150px"></div>	
+	    
+		<div *ngIf="thermo"><p>For Thermostatic Mixing Valves</p><img src="../assets/images/thermo1.png" width="500px" height="150px">
+		<img src="../assets/images/thermo2.png" width="500px" height="150px"></div>
+
+		<div *ngIf="llf"><p>For Low flow fixtures</p><img src="../assets/images/llf.png" width="500px" height="150px"></div>
+
+		<div *ngIf="ct" name="targetname"><p>For Cooling towers</p><img src="../assets/images/ct.png" width="500px" height="150px"></div>
+
+		<div *ngIf="cim"><p>For Centrally installed mister</p><img src="../assets/images/cim.png" width="500px" height="150px"></div>
+
+		<div *ngIf="deco"><p>For Decorative fountain</p><img src="../assets/images/deco.png" width="500px" height="150px"></div>
+
+		<div *ngIf="spa"><p>For Hot tubs (or spa)</p><img src="../assets/images/spa.png" width="500px" height="150px"></div>
+
+		<div *ngIf="faucet"><p>For Electronic faucets</p><img src="../assets/images/faucet.png" width="500px" height="150px"></div>
+
+		<div *ngIf="hose"><p>For Showers with flexible hoses</p><img src="../assets/images/hose.png" width="500px" height="150px"></div>-->
+	 
+	<!--<textarea *ngIf="deadEnds" id="w3mission1" rows="10" cols="140">
+		In a storage water heater, cold water enters at the base of the vessel with hot water being drawn off from the top for distribution. 
+		A control thermostat to regulate the supply of heat to the storage water heater should be fitter near the top of the vessel and 
+		adjusted so that the outlet water temperature is constant. The water temperature at the base of the storage water heater 
+		(i.e., under the heating coil) will usually be much cooler than the water temperature at the top and potentially create a zone of 
+		water temperature conducive to the growth of legionellae. One method of preventing growth is to ensure that the whole water content 
+		of the storage water heater, including that at the base, is heated to a temperature of at least 60 C for atleast one hour each day.
+		A shunt pump to move hot water from the top of the storage water heater to the base is one way of acheiving this. Ideally the storage 
+		water heater will have specific connections for the shunt-pump return, as low down on the storage water heater as.
+		</textarea>
+	
+		<textarea *ngIf="thermo" id="w3mission2" rows="10" cols="140">
+			In a storage water heater, cold water enters at the base of the vessel with hot water being drawn off from the top for distribution. 
+			A control thermostat to regulate the supply of heat to the storage water heater should be fitter near the top of the vessel and 
+			adjusted so that the outlet water temperature is constant. 
+			</textarea>
+		
+		<textarea *ngIf="llf" id="w3mission3" rows="10" cols="140">
+				In a storage water heater, cold water enters at the base of the vessel with hot water being drawn off from the top for distribution. 
+				A control thermostat to regulate the supply of heat to the storage water heater should be fitter near the top of the vessel and 
+				adjusted so that the outlet water temperature is constant. 
+		</textarea>	
+	
+		<textarea *ngIf="ct" id="w3mission4" rows="10" cols="140">
+			In a storage water heater, cold water enters at the base of the vessel with hot water being drawn off from the top for distribution. 
+			A control thermostat to regulate the supply of heat to the storage water heater should be fitter near the top of the vessel and 
+			adjusted so that the outlet water temperature is constant. 
+		</textarea>
+
+		<textarea *ngIf="cim" id="w3mission4" rows="10" cols="140">
+			In a storage water heater, cold water enters at the base of the vessel with hot water being drawn off from the top for distribution. 
+			A control thermostat to regulate the supply of heat to the storage water heater should be fitter near the top of the vessel and 
+			adjusted so that the outlet water temperature is constant. 
+		</textarea>
+	
+		<textarea *ngIf="deco" id="w3mission5" rows="10" cols="140">
+			In a storage water heater, cold water enters at the base of the vessel with hot water being drawn off from the top for distribution. 
+			A control thermostat to regulate the supply of heat to the storage water heater should be fitter near the top of the vessel and 
+			adjusted so that the outlet water temperature is constant. 
+		</textarea>
+
+		<textarea *ngIf="spa" id="w3mission6" rows="10" cols="140">
+			In a storage water heater, cold water enters at the base of the vessel with hot water being drawn off from the top for distribution. 
+			A control thermostat to regulate the supply of heat to the storage water heater should be fitter near the top of the vessel and 
+			adjusted so that the outlet water temperature is constant. 
+		</textarea>
+
+		<textarea *ngIf="faucet" id="w3mission4" rows="10" cols="140">
+			In a storage water heater, cold water enters at the base of the vessel with hot water being drawn off from the top for distribution. 
+			A control thermostat to regulate the supply of heat to the storage water heater should be fitter near the top of the vessel and 
+			adjusted so that the outlet water temperature is constant. 
+		</textarea>
+
+		<textarea *ngIf="hose" id="w3mission4" rows="10" cols="140">
+			In a storage water heater, cold water enters at the base of the vessel with hot water being drawn off from the top for distribution. 
+			A control thermostat to regulate the supply of heat to the storage water heater should be fitter near the top of the vessel and 
+			adjusted so that the outlet water temperature is constant. 
+		</textarea>-->
+
+	
+	<button class="btn btn-danger" (click)="downloadPDF()">Download PDF</button></div>
+</div>
+
+</form>
+<!--</article>-->
+</div>
+</section>
+
+<footer>
+	<div class="container-fluid footer-wrapper">
+		<div class="container1">
+
+			<div class="row">
+<address class="col-md-3" itemscope="itemscope" itemtype="https://schema.org/Organization">
+<strong>HAVE QUESTIONS?</strong>
+
+<!--<div class="row mt-2">
+<div class="col-1"><span class="fi cdc-icon-desktop x24" aria-hidden="true"></span></div>
+<div class="col">
+	<span class="pl-1"><a href="https://www.cdc.gov/cdc-info/index.html">Visit CDC-INFO</a></span>
+</div>
+</div>
+<div class="row mt-2">
+<div class="col-1"><span class="fi cdc-icon-phone x24"></span></div>
+<div class="col">
+	<span class="pl-1" itemprop="telephone">Call 800-232-4636</span>
+</div>
+</div>
+<div class="row mt-2">
+<div class="col-1"><span class="fi cdc-icon-email x24"></span></div>
+<div class="col">
+	<span class="pl-1" itemprop="url"><a href="https://wwwn.cdc.gov/dcs/contactus/form">Email CDC-INFO</a></span>
+</div>
+</div>
+<div class="row mt-2">
+<div class="col-1"><span class="fi cdc-icon-clock_01 x24"></span></div>
+<div class="col">
+	<span class="pl-1"><a href="https://www.cdc.gov/cdc-info/index.html">Open 24/7</a></span>
+</div>
+</div>-->
+</address>
+<div class="col-md-3 mt-3 mt-md-0">
+<strong>DST INFORMATION</strong>
+<!--<ul>
+<li><a href="https://www.cdc.gov/about/default.htm">About CDC</a></li>
+<li><a href="https://jobs.cdc.gov">Jobs</a></li>
+<li><a href="https://www.cdc.gov/funding">Funding</a></li>
+<li><a href="https://www.cdc.gov/Other/policies.html">Policies</a></li>
+<li><a href="https://www.cdc.gov/other/plugins/index.html">File Viewers &amp; Players</a></li>
+</ul>
+</div>
+<div class="col-md-3">
+<ul>
+<li><a href="https://www.cdc.gov/other/privacy.html">Privacy</a></li>
+<li><a href="https://www.cdc.gov/od/foia">FOIA</a></li>
+<li><a href="https://www.cdc.gov/eeo/nofearact/index.htm">No Fear Act</a></li>
+<li><a href="https://oig.hhs.gov">OIG</a></li>
+<li><a href="https://www.cdc.gov/other/nondiscrimination.html">Nondiscrimination</a></li>
+<li><a href="https://www.cdc.gov/contact/accessibility.html">Accessibility</a></li>
+</ul>-->
+</div>
+<div class="col-md-3 mt-2 mt-md-0 connect-icons">
+<strong>CONNECT WITH US</strong><br>
+<!--<ul class="list-inline mt-3">
+<li><a href="https://www.facebook.com/CDC" target="_blank"><span class="sr-only">Facebook</span><span class="fi cdc-icon-fb-white x24" aria-hidden="true"></span></a></li>
+<li><a href="https://twitter.com/CDCgov" target="_blank"><span class="sr-only">Twitter</span><span class="fi cdc-icon-twitter-white x24" aria-hidden="true"></span></a></li>
+<li><a href="https://www.instagram.com/CDCgov/" target="_blank"><span class="sr-only">Instagram</span><span class="fi cdc-icon-insta x24" aria-hidden="true"></span></a></li>
+<li><a href="https://www.linkedin.com/company/centers-for-disease-control-and-prevention" target="_blank"><span class="sr-only">LinkedIn</span><span class="fi cdc-icon-linkedin-white x24" aria-hidden="true"></span></a></li>
+<li><a href="https://www.snapchat.com/add/cdcgov" target="_blank"><span class="sr-only">Snapchat</span><span class="fi cdc-icon-snapchat x24" aria-hidden="true"></span></a></li>
+</ul><br class="d-none d-md-block">
+<ul class="list-inline mt-2">
+<li><a href="https://www.youtube.com/user/CDCstreamingHealth" target="_blank"><span class="sr-only">Youtube</span><span class="fi cdc-icon-youtube-white x24" aria-hidden="true"></span></a></li>
+<li><a href="https://tools.cdc.gov/medialibrary/index.aspx#/sharecontent/https://www.cdc.gov/legionella/wmp/toolkit/wmp-risk.html" class="footer-syndlink"><span class="sr-only">Syndicate</span><span class="fi cdc-icon-syndication-white x24" aria-hidden="true"></span></a></li>
+<li><a href="https://www.cdc.gov/cdctv"><span class="sr-only">CDC TV</span><span class="fi cdc-icon-cdc-tv-white x24" aria-hidden="true"></span></a></li>
+<li><a href="https://tools.cdc.gov/podcasts/rss.asp"><span class="sr-only">RSS</span><span class="fi cdc-icon-rss-white x24" aria-hidden="true"></span></a></li>
+<li><a href="https://wwwn.cdc.gov/dcs/RequestForm.aspx"><span class="sr-only">Email</span><span class="fi cdc-icon-email x24" aria-hidden="true"></span></a></li>
+</ul>-->
+</div>
+</div>
+</div>
+</div>
+	
+  </footer>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+

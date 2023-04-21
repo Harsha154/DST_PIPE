@@ -1,0 +1,52 @@
+<h3>Reactive Form</h3>
+<p *ngIf="isValidFormSubmitted && userForm.pristine" [ngClass] = "'success'">
+    Form submitted successfully.
+</p>
+<h2>Questions about building type:</h2>
+
+<form [formGroup]="userForm" (ngSubmit)="onFormSubmit()">
+  <table>
+	 <tr> 
+	   <td>Name:</td>
+	   <td> 
+	       <input formControlName="uname">
+		   <div *ngIf="userForm.get('uname').invalid && isValidFormSubmitted != null && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  Name required. 
+		   </div>
+	   </td>
+	 </tr> 
+	 <tr>
+	   <td>&nbsp; &nbsp;1.	Please tell us about the water system for the building you manage. Options to choose from:</td>
+	    <td> 
+	     <input type="radio" value="male" formControlName="gender"> Hospital
+		 <input type="radio" value="female" formControlName="gender"> Residence primarily for those >=65 years old
+		 <input type="radio" value="third" formControlName="gender">Hotel or High-rise apartment - multiple housing units and a centralized hot water system
+		 <div *ngIf="userForm.get('gender').invalid && isValidFormSubmitted != null && !isValidFormSubmitted" [ngClass] = "'error'"> 
+			  Gender required. 
+		 </div>		 
+		</td> 
+	 </tr>	  
+	 <tr>
+	   <td>Are you married? </td>
+	  <td>
+	   <input type="checkbox" formControlName="married">
+	  </td>
+	 </tr>	 
+	 <tr>
+	  <td>Accept T & C </td>
+	  <td>
+	     <input type="checkbox" formControlName="tc">
+		 <div *ngIf="userForm.get('tc').invalid && isValidFormSubmitted != null && !isValidFormSubmitted" [ngClass] = "'error'"> 
+		     Accept T & C.
+		 </div>		 
+	  </td>
+	 </tr>		 
+	 <tr> 	  
+	   <td colspan="2">
+	      <button>Submit</button>
+		  <button type="button" (click)="setDefaultValues()">Set Default</button>
+		  <button type="button" (click)="reset()">Reset</button>		  
+	   </td>
+	 </tr>	   
+  </table>  
+</form>
